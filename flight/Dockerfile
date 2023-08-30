@@ -5,6 +5,7 @@ RUN pip install -r ./requirements.txt
 COPY src /src
 RUN useradd -ms /bin/sh python
 RUN chown -R python:python /src
+RUN chmod +x /src/entrypoint.sh
 USER python
 WORKDIR /src
-ENTRYPOINT [ "python3","main.py" ]
+ENTRYPOINT [ "./entrypoint.sh" ]

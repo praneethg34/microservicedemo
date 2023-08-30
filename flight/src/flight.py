@@ -1,5 +1,6 @@
 import time
 import config
+import datetime
 
 
 
@@ -17,12 +18,16 @@ class Flight():
 
     def __init__(self,flight_number,from_city,from_state,to_city,to_state):
         self.flight_number="Flight"+flight_number
-        self.start = (from_city.lower(),from_state.lower())
-        self.end= (to_city.lower(),to_state.lower())
-        self.start_xy= get_lat_long(*self.start)
-        self.end_xy=get_lat_long(*self.end)
+        self.start = f"{from_city.lower()},{from_state.lower()}"
+        self.end= f"{to_city.lower()},{to_state.lower()}"
+        self.start_xy= get_lat_long(from_city,from_state)
+        self.end_xy=get_lat_long(to_city,to_state)
         self.curr_ind=0
         self.curr_xy=self.start_xy
+        self.start_time=None
+        self.end_time=None
+        self.current_estimate=None
+
         self.status="landed"
 
 
@@ -46,11 +51,14 @@ class Flight():
         return route 
 
     
+
     def get_current_xy(self):
         if self.status=="flying":
             try:
                 self.curr_xy=self.route[self.curr_ind]
                 self.curr_ind+=1
+                currtime=datetime.datetime.now()
+                self.current_estimate=datetime.datetime.strftime((currtime+datetime.timedelta(seconds=((len(self.route)-self.curr_ind)*5))),"%Y-%m-%d %H:%M:%S")
                 return self.curr_xy
             except Exception as err:
                 self.curr_xy=self.end_xy
@@ -74,6 +82,12 @@ class Flight():
                 self.start_xy=temp_startxy
 
             self.status="flying"
+            starttime=datetime.datetime.now()
+            self.start_time=datetime.datetime.strftime(starttime,"%Y-%m-%d %H:%M:%S")
+            self.end_time=datetime.datetime.strftime((starttime+datetime.timedelta(seconds=(len(self.route)*5))),"%Y-%m-%d %H:%M:%S")
+            self.current_estimate=self.end_time
+
+
             print(f"{self.flight_number} started flying from {self.start} to {self.end} ")
        
           

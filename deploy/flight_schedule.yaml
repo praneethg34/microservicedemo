@@ -28,7 +28,7 @@ spec:
             - name: TO_STATE
               value: ny
             - name: FLIGHT_NUMBER
-              value: "1000"  
+              value: "PI2NY"  
 
 ---
 
@@ -62,7 +62,7 @@ spec:
             - name: TO_STATE
               value: ca
             - name: FLIGHT_NUMBER
-              value: "1002"  
+              value: "DA2LA"  
 
 ---
 
@@ -96,7 +96,7 @@ spec:
             - name: TO_STATE
               value: wa
             - name: FLIGHT_NUMBER
-              value: "1003"  
+              value: "BO2SE"  
 
 ---
 
@@ -130,7 +130,98 @@ spec:
             - name: TO_STATE
               value: ny
             - name: FLIGHT_NUMBER
-              value: "1004"  
+              value: "CI2BF"  
 
 ---
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: co2wi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: co2wy
+  template:
+    metadata:
+      labels:
+        app: co2wy
+    spec:
+      containers:
+        - name: co2wy
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: columbus
+            - name: FROM_STATE
+              value: oh
+            - name: TO_CITY
+              value: wichita
+            - name: TO_STATE
+              value: ks
+            - name: FLIGHT_NUMBER
+              value: "CO2WY"  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nw2re
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nw2re
+  template:
+    metadata:
+      labels:
+        app: nw2re
+    spec:
+      containers:
+        - name: nw2re
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: newark
+            - name: FROM_STATE
+              value: nj
+            - name: TO_CITY
+              value: reno
+            - name: TO_STATE
+              value: tx
+            - name: FLIGHT_NUMBER
+              value: "NW2RE"  
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flightupdater
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flightupdater
+  template:
+    metadata:
+      labels:
+        app: flightupdater
+    spec:
+      containers:
+        - name: flightupdater
+          image: docker.io/praneethg34/demoflightupdater:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: env
+              value: production
+         

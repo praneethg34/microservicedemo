@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: PIT2NY
+  name: pit2ny
 spec:
   schedule: "* 2 * * *"  # Cron expression for running every 2 hours
   jobTemplate:
@@ -32,7 +32,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: LA2MI
+  name: la2mi
 spec:
   schedule: "* 4 * * *"  # Cron expression for running every 2 hours
   jobTemplate:
@@ -62,7 +62,7 @@ spec:
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: DA2DC
+  name: da2dc
 spec:
   schedule: "* 4 * * *"  # Cron expression for running every 2 hours
   jobTemplate:

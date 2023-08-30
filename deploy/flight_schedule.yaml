@@ -1,114 +1,136 @@
-apiVersion: batch/v1
-kind: CronJob
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: pit2ny
 spec:
-  schedule: "* 2 * * *"  # Cron expression for running every 2 hours
-  jobTemplate:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pit2ny
+  template:
+    metadata:
+      labels:
+        app: pit2ny
     spec:
-      template:
-        spec:
-          containers:
-            - name: pit2ny
-              image: docker.io/praneethg34/demoflight:latest
-              imagePullPolicy: IfNotPresent
-              env:
-                - name: KAFKA_BOOTSTRAP_SERVERS
-                  value: kafka1-kafka-bootstrap
-                - name: FROM_CITY
-                  value: pittsburgh
-                - name: FROM_STATE
-                  value: pa
-                - name: TO_CITY
-                  value: "new york"
-                - name: TO_STATE
-                  value: ny
-                - name: FLIGHT_NUMBER
-                  value: "1000"  
-                      
-          restartPolicy: OnFailure
----
+      containers:
+        - name: pit2ny
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: pittsburgh
+            - name: FROM_STATE
+              value: pa
+            - name: TO_CITY
+              value: "new york"
+            - name: TO_STATE
+              value: ny
+            - name: FLIGHT_NUMBER
+              value: "1000"  
 
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: la2mi
-spec:
-  schedule: "* 4 * * *"  # Cron expression for running every 2 hours
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-            - name: la2mi
-              image: docker.io/praneethg34/demoflight:latest
-              imagePullPolicy: IfNotPresent
-              env:
-                - name: KAFKA_BOOTSTRAP_SERVERS
-                  value: kafka1-kafka-bootstrap
-                - name: FROM_CITY
-                  value: "los angeles"
-                - name: FROM_STATE
-                  value: ca
-                - name: TO_CITY
-                  value: miami
-                - name: TO_STATE
-                  value: fl
-                - name: FLIGHT_NUMBER
-                  value: "1001"                        
-          restartPolicy: OnFailure
----
-
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: da2dc
-spec:
-  schedule: "* 4 * * *"  # Cron expression for running every 2 hours
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-            - name: da2dc
-              image: docker.io/praneethg34/demoflight:latest
-              imagePullPolicy: IfNotPresent
-              env:
-                - name: KAFKA_BOOTSTRAP_SERVERS
-                  value: kafka1-kafka-bootstrap
-                - name: FROM_CITY
-                  value: dallas
-                - name: FROM_STATE
-                  value: tx
-                - name: TO_CITY
-                  value: washington
-                - name: TO_STATE
-                  value: dc
-                - name: FLIGHT_NUMBER
-                  value: "1003"                        
-          restartPolicy: OnFailure
 ---
 
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flightupdater
+  name: da2la
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: flight-updater
+      app: da2la
   template:
     metadata:
       labels:
-        app: flight-updater
+        app: da2la
     spec:
       containers:
-        - name: flight-reciever
-          image: docker.io/praneethg34/demoflightupdater:latest
+        - name: da2la
+          image: docker.io/praneethg34/demoflight:latest
           imagePullPolicy: IfNotPresent
           env:
-            - name: env
-              value: production
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: dallas
+            - name: FROM_STATE
+              value: tx
+            - name: TO_CITY
+              value: "los angeles"
+            - name: TO_STATE
+              value: ca
+            - name: FLIGHT_NUMBER
+              value: "1002"  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bo2se
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bo2se
+  template:
+    metadata:
+      labels:
+        app: bo2se
+    spec:
+      containers:
+        - name: bo2se
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: boston
+            - name: FROM_STATE
+              value: ma
+            - name: TO_CITY
+              value: seattle
+            - name: TO_STATE
+              value: wa
+            - name: FLIGHT_NUMBER
+              value: "1003"  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ci2bf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ci2bf
+  template:
+    metadata:
+      labels:
+        app: ci2bf
+    spec:
+      containers:
+        - name: ci2bf
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: cincinnati
+            - name: FROM_STATE
+              value: oh
+            - name: TO_CITY
+              value: buffalo
+            - name: TO_STATE
+              value: ny
+            - name: FLIGHT_NUMBER
+              value: "1004"  
+
+---
+

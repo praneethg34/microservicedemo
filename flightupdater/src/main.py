@@ -66,6 +66,6 @@ while True:
     finally:
         if session:
             session.close()
-    time.sleep(1)        
+         
         
 consumer.close()

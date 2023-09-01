@@ -201,12 +201,152 @@ spec:
               value: "NW2RE"  
 
 ---
+
+
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chi2se
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chi2se
+  template:
+    metadata:
+      labels:
+        app: chi2se
+    spec:
+      containers:
+        - name: chi2se
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: chicago
+            - name: FROM_STATE
+              value: il
+            - name: TO_CITY
+              value: seattle
+            - name: TO_STATE
+              value: wa
+            - name: FLIGHT_NUMBER
+              value: "CHI2SE"  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ta2ba
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ta2ba
+  template:
+    metadata:
+      labels:
+        app: ta2ba
+    spec:
+      containers:
+        - name: ta2ba
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: tampa
+            - name: FROM_STATE
+              value: fl
+            - name: TO_CITY
+              value: baltimore
+            - name: TO_STATE
+              value: md
+            - name: FLIGHT_NUMBER
+              value: "ta2ba"  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: de2or
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: de2or
+  template:
+    metadata:
+      labels:
+        app: de2or
+    spec:
+      containers:
+        - name: de2or
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: denver
+            - name: FROM_STATE
+              value: co
+            - name: TO_CITY
+              value: orlando
+            - name: TO_STATE
+              value: fl
+            - name: FLIGHT_NUMBER
+              value: "DE2OR"  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: me2om
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: me2om
+  template:
+    metadata:
+      labels:
+        app: me2om
+    spec:
+      containers:
+        - name: me2om
+          image: docker.io/praneethg34/demoflight:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: memphis
+            - name: FROM_STATE
+              value: tn
+            - name: TO_CITY
+              value: omaha
+            - name: TO_STATE
+              value: ne
+            - name: FLIGHT_NUMBER
+              value: "ME2OM"  
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flightupdater
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: flightupdater
@@ -217,7 +357,7 @@ spec:
     spec:
       containers:
         - name: flightupdater
-          image: docker.io/praneethg34/demoflightupdater:latest
+          image: docker.io/praneethg34/demoflighupdater:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -225,3 +365,70 @@ spec:
             - name: env
               value: production
          
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flightrouteupdater
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flightrouteupdater
+  template:
+    metadata:
+      labels:
+        app: flightrouteupdater
+    spec:
+      containers:
+        - name: flightrouteupdater
+          image: docker.io/praneethg34/demoflightrouteupdater:1.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: env
+              value: production
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flightapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flightapi
+  template:
+    metadata:
+      labels:
+        app: flightapi
+    spec:
+      containers:
+        - name: flightapi
+          image: docker.io/praneethg34/demoflightapi:1.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: env
+              value: production
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flightapi
+spec:
+  selector:
+    app: flightapi
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 6000
+  type: ClusterIP

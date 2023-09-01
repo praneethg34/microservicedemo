@@ -64,7 +64,7 @@ class Flight():
                 self.curr_xy=self.end_xy
                 self.status="landed"
                 
-        return (self.status,self.curr_xy)
+        return (self.curr_xy)
         
 
 

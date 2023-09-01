@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: pit2ny
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
         - name: da2la
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -82,7 +82,7 @@ spec:
     spec:
       containers:
         - name: bo2se
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -116,7 +116,7 @@ spec:
     spec:
       containers:
         - name: ci2bf
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -150,7 +150,7 @@ spec:
     spec:
       containers:
         - name: co2wy
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -184,7 +184,7 @@ spec:
     spec:
       containers:
         - name: nw2re
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -221,7 +221,7 @@ spec:
     spec:
       containers:
         - name: chi2se
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -255,7 +255,7 @@ spec:
     spec:
       containers:
         - name: ta2ba
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -289,7 +289,7 @@ spec:
     spec:
       containers:
         - name: de2or
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
@@ -323,7 +323,7 @@ spec:
     spec:
       containers:
         - name: me2om
-          image: docker.io/praneethg34/demoflight:latest
+          image: docker.io/praneethg34/demoflight:1.0.1
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS

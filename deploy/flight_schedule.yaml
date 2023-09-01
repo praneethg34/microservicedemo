@@ -383,7 +383,7 @@ spec:
     spec:
       containers:
         - name: flightrouteupdater
-          image: docker.io/praneethg34/demoflightrouteupdater:1.0.1
+          image: docker.io/praneethg34/demoflightrouteupdater:1.0.2
           imagePullPolicy: IfNotPresent
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS

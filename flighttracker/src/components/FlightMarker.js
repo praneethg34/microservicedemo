@@ -73,7 +73,7 @@ const FlightMarker = ({flight,index})=>{
 
 
 
-if (routeData!==null){
+if (routeData!==null && routeData.length>1){
 
     
     return(

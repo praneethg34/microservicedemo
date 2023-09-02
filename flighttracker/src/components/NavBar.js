@@ -7,7 +7,7 @@ const NavBar = () => {
     <AppBar position="sticky" className='navbar'>
       <Toolbar>
         <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Flight Tracker
+          ADP POC 
         </Typography>
         <Button color="inherit" component={Link} to="/">
           Home

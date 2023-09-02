@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ph2mi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ph2mi
+  template:
+    metadata:
+      labels:
+        app: ph2mi
+    spec:
+      containers:
+        - name: ph2mi
+          image: docker.io/praneethg34/demoflight:1.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: phoenix
+            - name: FROM_STATE
+              value: az
+            - name: TO_CITY
+              value: minneapolis
+            - name: TO_STATE
+              value: mn
+            - name: FLIGHT_NUMBER
+              value: "PH2MI"  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sa2mn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sa2mn
+  template:
+    metadata:
+      labels:
+        app: sa2mn
+    spec:
+      containers:
+        - name: sa2mn
+          image: docker.io/praneethg34/demoflight:1.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: sacramento
+            - name: FROM_STATE
+              value: ca
+            - name: TO_CITY
+              value: manhattan
+            - name: TO_STATE
+              value: ny
+            - name: FLIGHT_NUMBER
+              value: "SA2MN"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tu2fr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tu2fr
+  template:
+    metadata:
+      labels:
+        app: tu2fr
+    spec:
+      containers:
+        - name: tu2fr
+          image: docker.io/praneethg34/demoflight:1.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: tulsa
+            - name: FROM_STATE
+              value: ok
+            - name: TO_CITY
+              value: fresno
+            - name: TO_STATE
+              value: ca
+            - name: FLIGHT_NUMBER
+              value: "TU2FR"  
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ak2lr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ak2lr
+  template:
+    metadata:
+      labels:
+        app: ak2lr
+    spec:
+      containers:
+        - name: ak2lr
+          image: docker.io/praneethg34/demoflight:1.0.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: kafka1-kafka-bootstrap
+            - name: FROM_CITY
+              value: akron
+            - name: FROM_STATE
+              value: oh
+            - name: TO_CITY
+              value: "little rock"
+            - name: TO_STATE
+              value: ar
+            - name: FLIGHT_NUMBER
+              value: "AK2LR"  
+

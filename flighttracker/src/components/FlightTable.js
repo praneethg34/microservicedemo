@@ -9,24 +9,18 @@ const convertTime=(timeString)=>{
 const date = new Date();
 
 // Extract hours, minutes, and seconds from the time string
-const [time, period] = timeString.split(" ");
+const [day, time] = timeString.split(" ");
 const [hours, minutes, seconds] = time.split(":").map(Number);
+const [year,month,whatDay] = day.split("-").map(Number);
 
 // Convert to 24-hour format
-let hours24 = period === "AM" ? hours : hours + 12;
 
-// Special case: 12 AM is 00 in 24-hour time
-if (hours === 12 && period === "AM") {
-  hours24 = 0;
-}
-
-// Special case: 12 PM is 12 in 24-hour time
-if (hours === 12 && period === "PM") {
-  hours24 = 12;
-}
 
 // Set the time on the date object
-date.setHours(hours24, minutes, seconds);
+date.setFullYear(year)
+date.setMonth(month-1)
+date.setDate(whatDay)
+date.setHours(hours, minutes, seconds);
 
 return date
 }
@@ -40,12 +34,12 @@ const FlightTable = ({ flightData }) => {
     useEffect(() => {
       const timer = setInterval(() => {
         setCurrentTime(new Date());
-      }, 60000); // 60,000 milliseconds = 1 minute
+      }, 1000); // 60,000 milliseconds = 1 minute
   
       return () => clearInterval(timer);
     }, [currentTime]);
   return (
-    <Paper>
+    <Paper className='statusTable'>
       <Table>
         <TableHead>
           <TableRow>
@@ -55,26 +49,27 @@ const FlightTable = ({ flightData }) => {
             <TableCell>Start Time</TableCell>
             <TableCell>End Time</TableCell>
             <TableCell>Current Estimate</TableCell>
-            <TableCell>Last Updated</TableCell>
+            <TableCell>On Time</TableCell>
+            <TableCell>Last Updated</TableCell>  
           </TableRow>
         </TableHead>
         <TableBody>
           {flightData.map((flight) => {
-            const lastUpdated = convertTime(flight.lastUpdated);
-            const timeDifference = Math.abs(currentTime - lastUpdated) / 60000; // in minutes
-            const shouldBlink = timeDifference > 1;
-            console.log(flight)
-            
-
+            const lastUpdated = convertTime(flight.last_updated_time);
+            const delayed= convertTime(flight.current_estimate)-convertTime(flight.arrival_time) > 300000 ;
+                    
             return (
-              <TableRow key={flight.flightNumber} >
-                <TableCell>{flight.flightNumber}</TableCell>
+              <TableRow key={flight.flight_number} >
+                <TableCell >{flight.flight_number}</TableCell>
                 <TableCell>{flight.origin}</TableCell>
                 <TableCell>{flight.destination}</TableCell>
-                <TableCell>{flight.startTime}</TableCell>
-                <TableCell>{flight.endTime}</TableCell>
-                <TableCell>{flight.currentEstimate}</TableCell>
-                <TableCell style={{ animation: shouldBlink ? 'blink 1s infinite': 'none'}}>{flight.lastUpdated}</TableCell>
+                <TableCell>{flight.departure_time}</TableCell>
+                <TableCell>{flight.arrival_time}</TableCell>
+                <TableCell>{flight.current_estimate}</TableCell>
+                <TableCell className={delayed? "delayed" : "ontime" }>{delayed ? "DELAYED" : "ON TIME"}</TableCell>
+                <TableCell >{flight.last_updated_time} </TableCell>
+                
+
               </TableRow>
             );
           })}

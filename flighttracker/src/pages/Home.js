@@ -8,8 +8,19 @@ const Home = () => {
   const { flights, loading, error } = useSelector((state) => state.flights);
 
   useEffect(() => {
-    dispatch(fetchFlights());
+    const timer = setInterval(() => {
+      dispatch(fetchFlights());
+    }, 5000); // 60,000 milliseconds = 1 minute
+
+    return () => clearInterval(timer);
+  
+
+
+
+    
   }, [dispatch]);
+
+
 
   return (
     <div>
